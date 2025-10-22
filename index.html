@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>🚀 Космический Квест: Три Столпа Веб-Разработки</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		:root {
+			--primary: #8A2BE2;
+			--secondary: #00CED1;
+			--accent: #FF44CC;
+			--bg-primary: #0f0f23;
+			--bg-secondary: #1a1a2e;
+			--text-primary: #ffffff;
+			--text-secondary: #b0b0cc;
+			--card-bg: rgba(255, 255, 255, 0.05);
+			--shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+			--gradient: linear-gradient(135deg, #8A2BE2 0%, #00CED1 50%, #FF44CC 100%);
+		}
+
+		.light-theme {
+			--primary: #6A0DAD;
+			--secondary: #009999;
+			--accent: #E60073;
+			--bg-primary: #f0f2f5;
+			--bg-secondary: #ffffff;
+			--text-primary: #2c3e50;
+			--text-secondary: #5d6d7e;
+			--card-bg: rgba(255, 255, 255, 0.8);
+			--shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+			--gradient: linear-gradient(135deg, #6A0DAD 0%, #009999 50%, #E60073 100%);
+		}
+
+		body {
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			background: var(--bg-primary);
+			color: var(--text-primary);
+			min-height: 100vh;
+			padding: 20px;
+			transition: all 0.5s ease;
+			position: relative;
+			overflow-x: hidden;
+		}
+
+		body::before {
+			content: '';
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background:
+				radial-gradient(circle at 20% 80%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+				radial-gradient(circle at 80% 20%, rgba(0, 206, 209, 0.1) 0%, transparent 50%),
+				radial-gradient(circle at 40% 40%, rgba(255, 68, 204, 0.05) 0%, transparent 50%);
+			z-index: -1;
+		}
+
+		.theme-toggle {
+			position: fixed;
+			top: 20px;
+			right: 20px;
+			background: var(--card-bg);
+			border: none;
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.5em;
+			box-shadow: var(--shadow);
+			backdrop-filter: blur(10px);
+			z-index: 1000;
+			transition: all 0.3s ease;
+		}
+
+		.theme-toggle:hover {
+			transform: scale(1.1) rotate(15deg);
+		}
+
+		.container {
+			max-width: 900px;
+			margin: 0 auto;
+			background: var(--card-bg);
+			border-radius: 20px;
+			box-shadow: var(--shadow);
+			overflow: hidden;
+			backdrop-filter: blur(10px);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.header {
+			background: var(--gradient);
+			color: white;
+			padding: 40px 30px;
+			text-align: center;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.header::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="stars" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="white" opacity="0.3"/><circle cx="50" cy="80" r="0.5" fill="white" opacity="0.3"/><circle cx="80" cy="40" r="0.8" fill="white" opacity="0.3"/><circle cx="10" cy="60" r="0.7" fill="white" opacity="0.3"/><circle cx="90" cy="90" r="0.4" fill="white" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23stars)"/></svg>');
+			animation: float 20s infinite linear;
+		}
+
+		@keyframes float {
+			0% {
+				transform: translateY(0) translateX(0);
+			}
+
+			50% {
+				transform: translateY(-10px) translateX(10px);
+			}
+
+			100% {
+				transform: translateY(0) translateX(0);
+			}
+		}
+
+		.header h1 {
+			font-size: 2.8em;
+			margin-bottom: 15px;
+			text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+			position: relative;
+			background: linear-gradient(45deg, #fff, #e0e0ff);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+		}
+
+		.header p {
+			font-size: 1.2em;
+			opacity: 0.9;
+			position: relative;
+		}
+
+		.progress-container {
+			background: rgba(255, 255, 255, 0.2);
+			border-radius: 10px;
+			padding: 20px;
+			margin: 25px 0;
+			backdrop-filter: blur(10px);
+		}
+
+		.progress-bar {
+			height: 12px;
+			background: rgba(255, 255, 255, 0.3);
+			border-radius: 6px;
+			overflow: hidden;
+			position: relative;
+		}
+
+		.progress {
+			height: 100%;
+			background: linear-gradient(90deg, var(--accent), var(--secondary));
+			width: 0%;
+			transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.progress::after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: -100%;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+			animation: shimmer 2s infinite;
+		}
+
+		@keyframes shimmer {
+			0% {
+				left: -100%;
+			}
+
+			100% {
+				left: 100%;
+			}
+		}
+
+		.quest-content {
+			padding: 30px;
+			min-height: 500px;
+		}
+
+		.challenge {
+			display: none;
+			animation: slideIn 0.6s ease-out;
+		}
+
+		@keyframes slideIn {
+			from {
+				opacity: 0;
+				transform: translateY(30px) scale(0.95);
+			}
+
+			to {
+				opacity: 1;
+				transform: translateY(0) scale(1);
+			}
+		}
+
+		.challenge.active {
+			display: block;
+		}
+
+		.challenge h2 {
+			color: var(--primary);
+			margin-bottom: 25px;
+			padding: 15px;
+			background: var(--card-bg);
+			border-radius: 15px;
+			border-left: 5px solid var(--accent);
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			box-shadow: var(--shadow);
+		}
+
+		.task {
+			background: var(--card-bg);
+			padding: 25px;
+			border-radius: 15px;
+			margin: 25px 0;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			box-shadow: var(--shadow);
+			transition: all 0.3s ease;
+		}
+
+		.task:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+		}
+
+		.code-editor {
+			background: #1e1e3f;
+			color: #f8f8f2;
+			padding: 20px;
+			border-radius: 12px;
+			margin: 20px 0;
+			font-family: 'Fira Code', 'Courier New', monospace;
+			min-height: 120px;
+			border: 2px solid #343458;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.code-editor::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 30px;
+			background: #343458;
+			display: flex;
+			align-items: center;
+			padding-left: 15px;
+			color: #fff;
+			font-size: 0.8em;
+			font-weight: bold;
+		}
+
+		.html-editor::before {
+			content: 'index.html';
+		}
+
+		.css-editor::before {
+			content: 'style.css';
+		}
+
+		.js-editor::before {
+			content: 'script.js';
+		}
+
+		.combined-editor::before {
+			content: 'counter.html';
+		}
+
+		.code-cursor {
+			background: var(--accent);
+			color: white;
+			padding: 2px 5px;
+			border-radius: 3px;
+			animation: blink 1s infinite;
+		}
+
+		@keyframes blink {
+
+			0%,
+			50% {
+				opacity: 1;
+			}
+
+			51%,
+			100% {
+				opacity: 0;
+			}
+		}
+
+		.input-group {
+			margin: 25px 0;
+			display: flex;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+
+		input,
+		select,
+		button {
+			padding: 14px 20px;
+			border: 2px solid var(--secondary);
+			border-radius: 10px;
+			font-size: 16px;
+			background: var(--card-bg);
+			color: var(--text-primary);
+			transition: all 0.3s ease;
+		}
+
+		input:focus,
+		select:focus {
+			outline: none;
+			border-color: var(--accent);
+			box-shadow: 0 0 0 3px rgba(255, 68, 204, 0.2);
+		}
+
+		.action-btn {
+			background: var(--gradient);
+			color: white;
+			border: none;
+			cursor: pointer;
+			font-weight: bold;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.action-btn::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: -100%;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+			transition: left 0.5s;
+		}
+
+		.action-btn:hover::before {
+			left: 100%;
+		}
+
+		.action-btn:hover {
+			transform: translateY(-3px);
+			box-shadow: 0 8px 20px rgba(138, 43, 226, 0.3);
+		}
+
+		.feedback {
+			padding: 20px;
+			border-radius: 12px;
+			margin: 20px 0;
+			display: none;
+			animation: bounceIn 0.6s ease;
+			border-left: 5px solid transparent;
+		}
+
+		@keyframes bounceIn {
+			0% {
+				transform: scale(0.8);
+				opacity: 0;
+			}
+
+			50% {
+				transform: scale(1.05);
+			}
+
+			100% {
+				transform: scale(1);
+				opacity: 1;
+			}
+		}
+
+		.feedback.success {
+			background: rgba(46, 204, 113, 0.2);
+			color: #27ae60;
+			border-left-color: #27ae60;
+			display: block;
+		}
+
+		.feedback.error {
+			background: rgba(231, 76, 60, 0.2);
+			color: #e74c3c;
+			border-left-color: #e74c3c;
+			display: block;
+		}
+
+		.hint {
+			background: rgba(241, 196, 15, 0.2);
+			color: #f39c12;
+			padding: 15px;
+			border-radius: 10px;
+			margin: 15px 0;
+			font-size: 0.95em;
+			border-left: 4px solid #f39c12;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.completion {
+			text-align: center;
+			padding: 60px 30px;
+			display: none;
+			animation: zoomIn 0.8s ease;
+		}
+
+		@keyframes zoomIn {
+			from {
+				transform: scale(0.5);
+				opacity: 0;
+			}
+
+			to {
+				transform: scale(1);
+				opacity: 1;
+			}
+		}
+
+		.completion h2 {
+			color: var(--accent);
+			font-size: 3em;
+			margin-bottom: 20px;
+			background: var(--gradient);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+		}
+
+		.badge {
+			font-size: 6em;
+			margin: 30px 0;
+			animation: bounce 2s infinite;
+			filter: drop-shadow(0 0 20px rgba(255, 68, 204, 0.5));
+		}
+
+		@keyframes bounce {
+
+			0%,
+			20%,
+			50%,
+			80%,
+			100% {
+				transform: translateY(0);
+			}
+
+			40% {
+				transform: translateY(-20px);
+			}
+
+			60% {
+				transform: translateY(-10px);
+			}
+		}
+
+		.level-indicator {
+			display: flex;
+			justify-content: space-between;
+			margin: 20px 0;
+			padding: 0 10px;
+		}
+
+		.level-dot {
+			width: 12px;
+			height: 12px;
+			border-radius: 50%;
+			background: var(--text-secondary);
+			transition: all 0.3s ease;
+		}
+
+		.level-dot.active {
+			background: var(--accent);
+			transform: scale(1.3);
+			box-shadow: 0 0 10px var(--accent);
+		}
+
+		.particles {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			pointer-events: none;
+			z-index: -1;
+		}
+
+		.particle {
+			position: absolute;
+			width: 4px;
+			height: 4px;
+			background: var(--accent);
+			border-radius: 50%;
+			animation: floatParticle 20s infinite linear;
+		}
+
+		@keyframes floatParticle {
+			0% {
+				transform: translateY(100vh) translateX(0) rotate(0deg);
+				opacity: 0;
+			}
+
+			10% {
+				opacity: 1;
+			}
+
+			90% {
+				opacity: 1;
+			}
+
+			100% {
+				transform: translateY(-100px) translateX(100px) rotate(360deg);
+				opacity: 0;
+			}
+		}
+
+		@media (max-width: 768px) {
+			.container {
+				margin: 10px;
+				border-radius: 15px;
+			}
+
+			.header h1 {
+				font-size: 2em;
+			}
+
+			.input-group {
+				flex-direction: column;
+			}
+
+			input,
+			select,
+			button {
+				width: 100%;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
+	<div class="particles" id="particles"></div>
+
+	<div class="container">
+		<div class="header">
+			<h1>🚀 Космический Квест: Три Столпа Веб-Разработки</h1>
+			<p>Покори вселенную веб-технологий и стань мастером фронтенда!</p>
+
+			<div class="progress-container">
+				<div class="level-indicator">
+					<div class="level-dot active" id="dot-1"></div>
+					<div class="level-dot" id="dot-2"></div>
+					<div class="level-dot" id="dot-3"></div>
+					<div class="level-dot" id="dot-4"></div>
+				</div>
+				<div class="progress-bar">
+					<div class="progress" id="progress"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="quest-content">
+			<!-- Уровень 1: HTML -->
+			<div class="challenge active" id="challenge-1">
+				<h2>🎯 Уровень 1: Структура HTML</h2>
+				<div class="task">
+					<p>🚀 Ты оказался в пустом HTML-документе. Создай базовую структуру страницы:</p>
+					<div class="code-editor html-editor">
+						&lt;!DOCTYPE html&gt;
+						&lt;html&gt;
+						&lt;head&gt;
+						&lt;title&gt;Моя космическая страница&lt;/title&gt;
+						&lt;/head&gt;
+						&lt;body&gt;
+						<span class="code-cursor" id="html-cursor">&nbsp;</span>
+						&lt;/body&gt;
+						&lt;/html&gt;
+					</div>
+					<div class="hint">
+						💡 Подсказка: Используй теги &lt;h1&gt; для заголовка и &lt;p&gt; для параграфа
+					</div>
+					<div class="input-group">
+						<input type="text" id="html-input" placeholder="Введи HTML-код здесь... (например: <h1>Привет!</h1>)">
+						<button class="action-btn" onclick="checkHTML()">🚀 Проверить код</button>
+					</div>
+					<div class="feedback" id="html-feedback"></div>
+				</div>
+			</div>
+
+			<!-- Уровень 2: CSS -->
+			<div class="challenge" id="challenge-2">
+				<h2>🎨 Уровень 2: Стили CSS</h2>
+				<div class="task">
+					<p>🌈 Твоя страница выглядит скучно! Добавь стили, чтобы сделать её космически красивой:</p>
+					<div class="code-editor css-editor">
+						/* Сделай заголовок синим и выровняй по центру */
+						h1 {
+						<span class="code-cursor" id="css-cursor">&nbsp;</span>
+						}
+
+						/* Добавь отступы для параграфа */
+						p {
+						margin: 20px;
+						}
+					</div>
+					<div class="input-group">
+						<select id="css-select">
+                            <option value="">🌌 Выбери космическое свойство</option>
+                            <option value="color: #00CED1; text-align: center;">color: #00CED1; text-align: center;</option>
+                            <option value="font-size: 2.5em; background: linear-gradient(45deg, #8A2BE2, #FF44CC); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Градиентный текст</option>
+                            <option value="border: 3px solid #FF44CC; padding: 20px; border-radius: 15px;">Рамка с подсветкой</option>
+                        </select>
+						<button class="action-btn" onclick="checkCSS()">🎨 Применить стили</button>
+					</div>
+					<div class="feedback" id="css-feedback"></div>
+				</div>
+			</div>
+
+			<!-- Уровень 3: JavaScript -->
+			<div class="challenge" id="challenge-3">
+				<h2>⚡ Уровень 3: Магия JavaScript</h2>
+				<div class="task">
+					<p>✨ Добавь интерактивности! Создай функцию, которая реагирует на клик:</p>
+					<div class="code-editor js-editor">
+						// Найди кнопку и добавь обработчик события
+						const button = document.getElementById('myButton');
+
+						button.addEventListener('click', function() {
+						<span class="code-cursor" id="js-cursor">&nbsp;</span>
+						});
+					</div>
+					<div class="input-group">
+						<input type="text" id="js-input" placeholder="Что должно произойти при клике? (например: this.style.transform = 'scale(1.1)')">
+						<button class="action-btn" onclick="checkJS()">⚡ Запустить код</button>
+					</div>
+					<div class="feedback" id="js-feedback"></div>
+				</div>
+			</div>
+
+			<!-- Уровень 4: Комбинированный -->
+			<div class="challenge" id="challenge-4">
+				<h2>🔗 Уровень 4: Комбинированная атака</h2>
+				<div class="task">
+					<p>🎮 Создай полноценный интерактивный космический счетчик:</p>
+					<div class="code-editor combined-editor">
+						&lt;!-- HTML --&gt;
+						&lt;div class="counter"&gt;
+						&lt;button id="decrease"&gt;➖&lt;/button&gt;
+						&lt;span id="count"&gt;0&lt;/span&gt;
+						&lt;button id="increase"&gt;➕&lt;/button&gt;
+						&lt;/div&gt;
+
+						&lt;style&gt;
+						/* CSS */
+						.counter {
+						display: flex;
+						gap: 15px;
+						align-items: center;
+						font-size: 2em;
+						background: var(--gradient);
+						padding: 20px;
+						border-radius: 15px;
+						color: white;
+						}
+						&lt;/style&gt;
+
+						&lt;script&gt;
+						// JavaScript
+						let count = 0;
+						<span class="code-cursor" id="combined-cursor">&nbsp;</span>
+						&lt;/script&gt;
+					</div>
+					<div class="input-group">
+						<button class="action-btn" onclick="showHint(4)">💡 Космическая подсказка</button>
+						<button class="action-btn" onclick="checkCombined()">🎯 Проверить решение</button>
+					</div>
+					<div class="feedback" id="combined-feedback"></div>
+				</div>
+			</div>
+
+			<!-- Завершение -->
+			<div class="completion" id="completion">
+				<div class="badge">🏆</div>
+				<h2>Поздравляем! 🎉</h2>
+				<p>Ты успешно покорил космический квест веб-разработки!</p>
+				<p>Теперь ты владеешь основами HTML, CSS и JavaScript на уровне джедая! 🚀</p>
+				<button class="action-btn" onclick="restartQuest()">🔄 Начать новую миссию</button>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		let currentLevel = 1;
+        const totalLevels = 4;
+        let isDarkTheme = true;
+
+        // Создание частиц
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.background = i % 3 === 0 ? 'var(--primary)' : i % 3 === 1 ? 'var(--secondary)' : 'var(--accent)';
+                particle.style.width = (Math.random() * 4 + 2) + 'px';
+                particle.style.height = particle.style.width;
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Переключение темы
+        function toggleTheme() {
+            isDarkTheme = !isDarkTheme;
+            document.body.classList.toggle('light-theme');
+            document.querySelector('.theme-toggle').textContent = isDarkTheme ? '🌙' : '☀️';
+            
+            // Анимация переключения
+            document.body.style.opacity = '0.7';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 300);
+        }
+
+        function updateProgress() {
+            const progress = ((currentLevel - 1) / totalLevels) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+            
+            // Обновление точек прогресса
+            for (let i = 1; i <= totalLevels; i++) {
+                const dot = document.getElementById(`dot-${i}`);
+                if (i <= currentLevel) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            }
+        }
+
+        function showLevel(level) {
+            document.querySelectorAll('.challenge').forEach(challenge => {
+                challenge.classList.remove('active');
+            });
+            const currentChallenge = document.getElementById(`challenge-${level}`);
+            currentChallenge.classList.add('active');
+            
+            // Анимация появления
+            currentChallenge.style.animation = 'none';
+            setTimeout(() => {
+                currentChallenge.style.animation = 'slideIn 0.6s ease-out';
+            }, 10);
+        }
+
+        function checkHTML() {
+            const input = document.getElementById('html-input').value.toLowerCase();
+            const feedback = document.getElementById('html-feedback');
+            
+            if (input.includes('<h1>') && input.includes('</h1>') && 
+                (input.includes('<p>') || input.includes('<div>') || input.includes('<span>'))) {
+                feedback.className = 'feedback success';
+                feedback.innerHTML = '✅ Отлично! Ты создал правильную космическую структуру HTML! 🚀';
+                celebrate();
+                setTimeout(() => {
+                    currentLevel = 2;
+                    showLevel(2);
+                    updateProgress();
+                }, 2000);
+            } else {
+                feedback.className = 'feedback error';
+                feedback.innerHTML = '❌ Почти! Убедись, что используешь теги h1 и p/div/span для создания структуры';
+            }
+        }
+
+        function checkCSS() {
+            const select = document.getElementById('css-select');
+            const feedback = document.getElementById('css-feedback');
+            
+            if (select.value.includes("color: #00CED1; text-align: center;")) {
+                feedback.className = 'feedback success';
+                feedback.innerHTML = '🎨 Прекрасно! Страница стала выглядеть космически красиво! 🌈';
+                celebrate();
+                setTimeout(() => {
+                    currentLevel = 3;
+                    showLevel(3);
+                    updateProgress();
+                }, 2000);
+            } else {
+                feedback.className = 'feedback error';
+                feedback.innerHTML = '🎨 Не совсем... Попробуй сделать заголовок бирюзовым и выровнять по центру';
+            }
+        }
+
+        function checkJS() {
+            const input = document.getElementById('js-input').value.toLowerCase();
+            const feedback = document.getElementById('js-feedback');
+            
+            if (input.includes('style') || input.includes('class') || input.includes('inner') || input.includes('text')) {
+                feedback.className = 'feedback success';
+                feedback.innerHTML = '⚡ Удивительно! JavaScript оживил твою космическую страницу! ✨';
+                celebrate();
+                setTimeout(() => {
+                    currentLevel = 4;
+                    showLevel(4);
+                    updateProgress();
+                }, 2000);
+            } else {
+                feedback.className = 'feedback error';
+                feedback.innerHTML = '⚡ Интересная идея, но попробуй добавить изменение стилей или содержимого страницы';
+            }
+        }
+
+        function checkCombined() {
+            const feedback = document.getElementById('combined-feedback');
+            
+            feedback.className = 'feedback success';
+            feedback.innerHTML = '🔗 Идеально! Ты создал полноценный интерактивный космический элемент! 🎮';
+            celebrate();
+            
+            setTimeout(() => {
+                document.getElementById('completion').style.display = 'block';
+                document.querySelectorAll('.challenge').forEach(challenge => {
+                    challenge.style.display = 'none';
+                });
+                finalCelebration();
+            }, 2000);
+        }
+
+        function showHint(level) {
+            const feedback = document.getElementById('combined-feedback');
+            feedback.className = 'feedback success';
+            feedback.innerHTML = '💡 Космическая подсказка: Добавь обработчики событий для кнопок, которые изменяют переменную count и обновляют текст в span с id="count"';
+        }
+
+        function restartQuest() {
+            currentLevel = 1;
+            updateProgress();
+            showLevel(1);
+            document.getElementById('completion').style.display = 'none';
+            document.querySelectorAll('.challenge').forEach(challenge => {
+                challenge.style.display = 'block';
+            });
+            
+            // Сброс всех полей ввода
+            document.getElementById('html-input').value = '';
+            document.getElementById('css-select').selectedIndex = 0;
+            document.getElementById('js-input').value = '';
+            
+            // Сброс фидбэков
+            document.querySelectorAll('.feedback').forEach(fb => {
+                fb.style.display = 'none';
+            });
+        }
+
+        function celebrate() {
+            // Создание эффекта конфетти
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.cssText = `
+                        position: fixed;
+                        width: 10px;
+                        height: 10px;
+                        background: ${i % 3 === 0 ? 'var(--primary)' : i % 3 === 1 ? 'var(--secondary)' : 'var(--accent)'};
+                        border-radius: 50%;
+                        top: -10px;
+                        left: ${Math.random() * 100}vw;
+                        animation: confettiFall 1s ease-out forwards;
+                        pointer-events: none;
+                        z-index: 1000;
+                    `;
+                    
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        @keyframes confettiFall {
+                            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+                            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 1000);
+                }, i * 100);
+            }
+        }
+
+        function finalCelebration() {
+            // Более масштабное празднование
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const star = document.createElement('div');
+                    star.style.cssText = `
+                        position: fixed;
+                        width: ${Math.random() * 20 + 5}px;
+                        height: ${Math.random() * 20 + 5}px;
+                        background: ${i % 4 === 0 ? 'var(--primary)' : i % 4 === 1 ? 'var(--secondary)' : i % 4 === 2 ? 'var(--accent)' : '#FFD700'};
+                        border-radius: ${Math.random() > 0.5 ? '50%' : '0%'};
+                        top: -30px;
+                        left: ${Math.random() * 100}vw;
+                        animation: starFall ${Math.random() * 2 + 1}s ease-in forwards;
+                        pointer-events: none;
+                        z-index: 1000;
+                    `;
+                    
+                    const style = document.createElement('style');
+                    if (!document.querySelector('#starAnimation')) {
+                        style.id = 'starAnimation';
+                        style.textContent = `
+                            @keyframes starFall {
+                                0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+                                100% { transform: translateY(120vh) rotate(720deg) scale(0); opacity: 0; }
+                            }
+                        `;
+                        document.head.appendChild(style);
+                    }
+                    document.body.appendChild(star);
+                    
+                    setTimeout(() => star.remove(), 2000);
+                }, i * 50);
+            }
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+            createParticles();
+            
+            // Добавляем обработчики Enter для полей ввода
+            document.getElementById('html-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') checkHTML();
+            });
+            
+            document.getElementById('js-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') checkJS();
+            });
+        });
+	</script>
+<footer>
+	<div>
+		<a href="https://github.com/nrostomentos" class="btn">На GitHub</a>
+		<a href="https://t.me/swn_f" class="btn">Связаться со мной</a>
+	</div>
+</footer>
+</body>
+
+</html>
