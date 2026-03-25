@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>🌌 Космический Квест: Путь Веб-Разработчика</title>
+	<title>🔪 DANGANRONPA | Квест: Путь Разработчика</title>
 	<style>
 		* {
 			margin: 0;
@@ -13,92 +13,61 @@
 		}
 
 		:root {
-			--cosmic-purple: #8B5FBF;
-			--nebula-blue: #6A67CE;
-			--star-yellow: #FFD700;
-			--galaxy-indigo: #4B0082;
-			--space-black: #0A0A1A;
-			--comet-cyan: #00FFFF;
-			--planet-orange: #FF6B35;
-			--text-glow: #E6E6FA;
-			--gradient-space: linear-gradient(135deg, #0A0A1A 0%, #1A1A3A 50%, #2D2B55 100%);
-			--gradient-nebula: linear-gradient(45deg, #8B5FBF, #6A67CE, #00FFFF, #4B0082);
+			--dr-pink: #e6007a;
+			--dr-red: #b52e2e;
+			--dr-black: #1a1a1a;
+			--dr-white: #f8f8f8;
+			--dr-gray: #2e2e2e;
+			--dr-shadow: rgba(0, 0, 0, 0.3);
+			--gradient-dr: linear-gradient(135deg, #e6007a, #b52e2e);
 		}
 
 		body {
-			font-family: 'Orbitron', 'Arial', sans-serif;
-			background: var(--gradient-space);
-			color: var(--text-glow);
+			font-family: 'Segoe UI', 'Poppins', 'Impact', 'Arial Black', sans-serif;
+			background: #0a0a0a;
+			color: var(--dr-white);
 			min-height: 100vh;
 			overflow-x: hidden;
 			position: relative;
+			background-image: repeating-linear-gradient(45deg, transparent, transparent 30px, rgba(230, 0, 122, 0.03) 30px, rgba(230, 0, 122, 0.03) 60px);
 		}
 
-		/* Космический фон с звездами */
-		.cosmic-bg {
+		/* Фон с эффектом "крови" */
+		.dr-bg {
 			position: fixed;
 			top: 0;
 			left: 0;
 			width: 100%;
 			height: 100%;
 			z-index: -2;
+			background: radial-gradient(circle at 20% 40%, rgba(230, 0, 122, 0.05), transparent 50%),
+						radial-gradient(circle at 80% 70%, rgba(181, 46, 46, 0.05), transparent 50%);
 		}
 
-		.star {
-			position: absolute;
-			background: white;
-			border-radius: 50%;
-			animation: twinkle 4s infinite;
-		}
-
-		@keyframes twinkle {
-
-			0%,
-			100% {
-				opacity: 0.3;
-			}
-
-			50% {
-				opacity: 1;
-			}
-		}
-
-		/* Планеты */
-		.planet {
+		/* Плавающие "кровавые" элементы */
+		.dr-particle {
 			position: fixed;
+			background: var(--dr-pink);
 			border-radius: 50%;
-			filter: blur(1px);
+			filter: blur(8px);
+			opacity: 0.1;
+			animation: floatParticle 20s infinite ease-in-out;
 			z-index: -1;
 		}
 
-		.planet-1 {
-			width: 200px;
-			height: 200px;
-			top: 10%;
-			right: 5%;
-			background: radial-gradient(circle at 30% 30%, var(--planet-orange), var(--galaxy-indigo));
-			animation: float 20s infinite ease-in-out;
-		}
-
-		.planet-2 {
-			width: 150px;
-			height: 150px;
-			bottom: 15%;
-			left: 8%;
-			background: radial-gradient(circle at 40% 40%, var(--comet-cyan), var(--nebula-blue));
-			animation: float 15s infinite ease-in-out reverse;
+		@keyframes floatParticle {
+			0%, 100% { transform: translateY(0) translateX(0); }
+			50% { transform: translateY(-50px) translateX(30px); }
 		}
 
 		/* Контейнер */
-		.cosmic-container {
+		.dr-container {
 			max-width: 1000px;
 			margin: 0 auto;
-			background: rgba(10, 10, 26, 0.8);
+			background: rgba(26, 26, 26, 0.92);
 			border-radius: 25px;
-			border: 2px solid var(--cosmic-purple);
-			box-shadow:
-				0 0 50px rgba(139, 95, 191, 0.3),
-				inset 0 0 50px rgba(106, 103, 206, 0.1);
+			border: 3px solid var(--dr-pink);
+			box-shadow: 10px 10px 0 var(--dr-black);
 			backdrop-filter: blur(10px);
 			overflow: hidden;
 			position: relative;
@@ -106,74 +75,69 @@
 		}
 
 		/* Заголовок */
-		.cosmic-header {
-			background: var(--gradient-nebula);
+		.dr-header {
+			background: var(--gradient-dr);
 			padding: 50px 30px;
 			text-align: center;
 			position: relative;
 			overflow: hidden;
+			border-bottom: 3px solid var(--dr-black);
 		}
 
-		.cosmic-header::before {
-			content: '';
+		.dr-header::before {
+			content: '⚠';
 			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="constellation" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="0.5" fill="white" opacity="0.3"/><circle cx="15" cy="8" r="0.3" fill="white" opacity="0.3"/><circle cx="8" cy="15" r="0.4" fill="white" opacity="0.3"/><line x1="2" y1="2" x2="15" y2="8" stroke="white" stroke-width="0.2" opacity="0.2"/><line x1="15" y1="8" x2="8" y2="15" stroke="white" stroke-width="0.2" opacity="0.2"/></pattern></defs><rect width="100" height="100" fill="url(%23constellation)"/></svg>');
-			animation: moveConstellation 30s linear infinite;
+			font-size: 200px;
+			opacity: 0.1;
+			right: -30px;
+			bottom: -50px;
+			pointer-events: none;
+			font-weight: bold;
 		}
 
-		@keyframes moveConstellation {
-			0% {
-				transform: translateX(0) translateY(0);
-			}
-
-			100% {
-				transform: translateX(-20px) translateY(-20px);
-			}
-		}
-
-		.cosmic-header h1 {
+		.dr-header h1 {
 			font-size: 3.5em;
 			margin-bottom: 20px;
-			text-shadow:
-				0 0 10px var(--comet-cyan),
-				0 0 20px var(--nebula-blue),
-				0 0 30px var(--cosmic-purple);
-			background: linear-gradient(45deg, var(--star-yellow), var(--comet-cyan), var(--text-glow));
+			text-shadow: 4px 4px 0 var(--dr-black);
+			font-family: 'Impact', 'Arial Black', sans-serif;
+			letter-spacing: 2px;
+			background: linear-gradient(45deg, #fff, #ff99cc);
 			-webkit-background-clip: text;
 			-webkit-text-fill-color: transparent;
 			background-clip: text;
-			position: relative;
+		}
+
+		.dr-header p {
+			font-size: 1.2em;
+			text-shadow: 2px 2px 0 var(--dr-black);
 		}
 
 		/* Прогресс-бар */
-		.cosmic-progress {
-			background: rgba(0, 0, 0, 0.5);
+		.dr-progress {
+			background: rgba(0, 0, 0, 0.6);
 			border-radius: 15px;
 			padding: 25px;
 			margin: 30px 0;
-			border: 1px solid var(--comet-cyan);
-			box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+			border: 2px solid var(--dr-pink);
+			box-shadow: 0 0 20px rgba(230, 0, 122, 0.3);
 		}
 
 		.progress-bar {
 			height: 15px;
-			background: rgba(74, 0, 130, 0.3);
+			background: rgba(0, 0, 0, 0.5);
 			border-radius: 10px;
 			overflow: hidden;
-			position: relative;
+			border: 1px solid var(--dr-red);
 		}
 
 		.progress {
 			height: 100%;
-			background: var(--gradient-nebula);
+			background: var(--gradient-dr);
 			width: 0%;
-			transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+			transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 			position: relative;
 			overflow: hidden;
+			box-shadow: 0 0 10px var(--dr-pink);
 		}
 
 		.progress::after {
@@ -183,39 +147,34 @@
 			left: -100%;
 			width: 100%;
 			height: 100%;
-			background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-			animation: nebulaShimmer 3s infinite;
+			background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+			animation: shimmer 2s infinite;
 		}
 
-		@keyframes nebulaShimmer {
-			0% {
-				left: -100%;
-			}
-
-			100% {
-				left: 100%;
-			}
+		@keyframes shimmer {
+			0% { left: -100%; }
+			100% { left: 100%; }
 		}
 
 		/* Уровни */
-		.cosmic-levels {
+		.dr-levels {
 			display: grid;
 			grid-template-columns: repeat(4, 1fr);
 			gap: 15px;
-			margin: 25px 0;
+			margin-bottom: 25px;
 		}
 
 		.level-dot {
 			height: 12px;
-			background: rgba(106, 103, 206, 0.3);
+			background: rgba(230, 0, 122, 0.3);
 			border-radius: 6px;
 			position: relative;
 			transition: all 0.5s ease;
 		}
 
 		.level-dot.active {
-			background: var(--gradient-nebula);
-			box-shadow: 0 0 15px var(--comet-cyan);
+			background: var(--gradient-dr);
+			box-shadow: 0 0 15px var(--dr-pink);
 		}
 
 		/* Контент квеста */
@@ -225,20 +184,17 @@
 
 		.challenge {
 			display: none;
-			animation: cosmicAppear 0.8s ease-out;
+			animation: drAppear 0.5s ease-out;
 		}
 
-		@keyframes cosmicAppear {
+		@keyframes drAppear {
 			from {
 				opacity: 0;
-				transform: translateY(50px) scale(0.9);
-				filter: blur(10px);
+				transform: translateY(30px);
 			}
-
 			to {
 				opacity: 1;
-				transform: translateY(0) scale(1);
-				filter: blur(0);
+				transform: translateY(0);
 			}
 		}
 
@@ -247,104 +203,76 @@
 		}
 
 		.challenge h2 {
-			font-size: 2.2em;
+			font-size: 2em;
 			margin-bottom: 30px;
 			padding: 20px;
-			background: rgba(139, 95, 191, 0.1);
+			background: rgba(230, 0, 122, 0.1);
 			border-radius: 15px;
-			border-left: 5px solid var(--comet-cyan);
-			text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+			border-left: 5px solid var(--dr-pink);
+			text-shadow: 0 0 10px rgba(230, 0, 122, 0.5);
+			font-family: 'Impact', sans-serif;
 			display: flex;
 			align-items: center;
 			gap: 15px;
 		}
 
 		/* Задачи */
-		.cosmic-task {
-			background: rgba(26, 26, 58, 0.6);
+		.dr-task {
+			background: rgba(26, 26, 26, 0.8);
 			padding: 30px;
 			border-radius: 20px;
 			margin: 30px 0;
-			border: 1px solid rgba(139, 95, 191, 0.3);
-			box-shadow:
-				0 0 30px rgba(106, 103, 206, 0.1),
-				inset 0 0 30px rgba(0, 255, 255, 0.05);
-			transition: all 0.3s ease;
+			border: 2px solid var(--dr-pink);
+			box-shadow: 6px 6px 0 var(--dr-black);
+			transition: all 0.2s ease;
 			position: relative;
 			overflow: hidden;
 		}
 
-		.cosmic-task::before {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: -100%;
-			width: 100%;
-			height: 100%;
-			background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
-			transition: left 0.5s;
-		}
-
-		.cosmic-task:hover::before {
-			left: 100%;
-		}
-
-		.cosmic-task:hover {
-			transform: translateY(-5px);
-			box-shadow:
-				0 0 50px rgba(106, 103, 206, 0.2),
-				inset 0 0 30px rgba(0, 255, 255, 0.1);
+		.dr-task:hover {
+			transform: translate(-2px, -2px);
+			box-shadow: 10px 10px 0 var(--dr-black);
 		}
 
 		/* Редакторы кода */
-		.cosmic-editor {
-			background: #1E1E3F;
-			color: #F8F8F2;
+		.dr-editor {
+			background: #0f0f1a;
+			color: #f8f8f2;
 			padding: 25px;
+			padding-top: 45px;
 			border-radius: 15px;
 			margin: 25px 0;
 			font-family: 'Fira Code', 'Courier New', monospace;
-			border: 2px solid var(--nebula-blue);
+			border: 2px solid var(--dr-pink);
 			position: relative;
-			overflow: hidden;
-			box-shadow: 0 0 25px rgba(106, 103, 206, 0.3);
+			overflow-x: auto;
+			box-shadow: 4px 4px 0 var(--dr-black);
 		}
 
-		.cosmic-editor::before {
+		.dr-editor::before {
 			content: '';
 			position: absolute;
 			top: 0;
 			left: 0;
 			right: 0;
 			height: 35px;
-			background: #343466;
+			background: var(--gradient-dr);
 			display: flex;
 			align-items: center;
 			padding-left: 20px;
-			color: var(--comet-cyan);
+			color: white;
 			font-weight: bold;
 			font-size: 0.9em;
 		}
 
-		.html-editor::before {
-			content: '🚀 cosmic.html';
-		}
-
-		.css-editor::before {
-			content: '🎨 nebula.css';
-		}
-
-		.js-editor::before {
-			content: '⚡ galaxy.js';
-		}
-
-		.combined-editor::before {
-			content: '🌌 starcounter.html';
-		}
+		.html-editor::before { content: '🔪 dangan.html'; }
+		.css-editor::before { content: '💔 despair.css'; }
+		.js-editor::before { content: '⚡ hope.js'; }
+		.combined-editor::before { content: '🎲 class-trial.html'; }
 
 		.code-cursor {
-			background: var(--comet-cyan);
-			color: var(--space-black);
+			background: var(--dr-pink);
+			color: var(--dr-black);
 			padding: 2px 6px;
 			border-radius: 4px;
 			animation: blink 1s infinite;
@@ -352,268 +280,221 @@
 		}
 
 		@keyframes blink {
-
-			0%,
-			50% {
-				opacity: 1;
-			}
-
-			51%,
-			100% {
-				opacity: 0;
-			}
+			0%, 50% { opacity: 1; }
+			51%, 100% { opacity: 0; }
 		}
 
 		/* Элементы ввода */
-		.cosmic-inputs {
+		.dr-inputs {
 			display: flex;
 			gap: 15px;
 			margin: 25px 0;
 			flex-wrap: wrap;
 		}
 
-		.cosmic-input,
-		.cosmic-select,
-		.cosmic-btn {
+		.dr-input,
+		.dr-select,
+		.dr-btn {
 			padding: 15px 25px;
-			border: 2px solid var(--nebula-blue);
+			border: 2px solid var(--dr-pink);
 			border-radius: 12px;
 			font-size: 16px;
-			font-family: 'Orbitron', sans-serif;
-			background: rgba(26, 26, 58, 0.8);
-			color: var(--text-glow);
-			transition: all 0.3s ease;
+			font-family: monospace;
+			background: rgba(26, 26, 26, 0.9);
+			color: var(--dr-white);
+			transition: all 0.2s ease;
 			flex: 1;
 			min-width: 200px;
 		}
 
-		.cosmic-input:focus,
-		.cosmic-select:focus {
+		.dr-input:focus,
+		.dr-select:focus {
 			outline: none;
-			border-color: var(--comet-cyan);
-			box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+			border-color: var(--dr-red);
+			box-shadow: 0 0 15px rgba(230, 0, 122, 0.3);
 		}
 
-		.cosmic-btn {
-			background: var(--gradient-nebula);
+		.dr-btn {
+			background: var(--gradient-dr);
 			color: white;
 			border: none;
 			cursor: pointer;
 			font-weight: bold;
-			position: relative;
-			overflow: hidden;
-			text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+			box-shadow: 4px 4px 0 var(--dr-black);
+			text-transform: uppercase;
+			letter-spacing: 1px;
 		}
 
-		.cosmic-btn::before {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: -100%;
-			width: 100%;
-			height: 100%;
-			background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-			transition: left 0.5s;
+		.dr-btn:active {
+			transform: translate(2px, 2px);
+			box-shadow: 2px 2px 0 var(--dr-black);
 		}
 
-		.cosmic-btn:hover::before {
-			left: 100%;
-		}
-
-		.cosmic-btn:hover {
-			transform: translateY(-3px);
-			box-shadow:
-				0 5px 25px rgba(139, 95, 191, 0.4),
-				0 0 30px rgba(0, 255, 255, 0.3);
+		.dr-btn:hover {
+			background: linear-gradient(135deg, #ff1a8c, #cc3b3b);
 		}
 
 		/* Подсказки */
-		.cosmic-hint {
-			background: rgba(255, 215, 0, 0.1);
-			color: var(--star-yellow);
+		.dr-hint {
+			background: rgba(230, 0, 122, 0.1);
+			color: var(--dr-pink);
 			padding: 20px;
 			border-radius: 12px;
 			margin: 20px 0;
-			border-left: 4px solid var(--star-yellow);
+			border-left: 4px solid var(--dr-pink);
 			display: flex;
 			align-items: center;
 			gap: 15px;
-			text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 		}
 
 		/* Фидбэк */
-		.cosmic-feedback {
+		.dr-feedback {
 			padding: 25px;
 			border-radius: 15px;
 			margin: 25px 0;
 			display: none;
-			animation: feedbackPulse 0.6s ease;
+			animation: feedbackPulse 0.5s ease;
 			border: 2px solid transparent;
-			text-shadow: 0 0 10px currentColor;
+			font-weight: bold;
 		}
 
 		@keyframes feedbackPulse {
-			0% {
-				transform: scale(0.8);
-				opacity: 0;
-			}
-
-			70% {
-				transform: scale(1.05);
-			}
-
-			100% {
-				transform: scale(1);
-				opacity: 1;
-			}
+			0% { transform: scale(0.95); opacity: 0; }
+			100% { transform: scale(1); opacity: 1; }
 		}
 
-		.cosmic-feedback.success {
-			background: rgba(46, 204, 113, 0.1);
+		.dr-feedback.success {
+			background: rgba(46, 204, 113, 0.15);
 			color: #2ECC71;
 			border-color: #2ECC71;
 			display: block;
-			box-shadow: 0 0 30px rgba(46, 204, 113, 0.2);
+			box-shadow: 0 0 20px rgba(46, 204, 113, 0.2);
 		}
 
-		.cosmic-feedback.error {
-			background: rgba(231, 76, 60, 0.1);
+		.dr-feedback.error {
+			background: rgba(231, 76, 60, 0.15);
 			color: #E74C3C;
 			border-color: #E74C3C;
 			display: block;
-			box-shadow: 0 0 30px rgba(231, 76, 60, 0.2);
+			box-shadow: 0 0 20px rgba(231, 76, 60, 0.2);
 		}
 
 		/* Завершение */
-		.cosmic-completion {
+		.dr-completion {
 			text-align: center;
 			padding: 80px 40px;
 			display: none;
-			animation: cosmicVictory 1s ease-out;
-			background: var(--gradient-nebula);
+			animation: drVictory 0.8s ease-out;
+			background: var(--gradient-dr);
 			border-radius: 20px;
 			margin: 30px 0;
+			border: 3px solid var(--dr-black);
+			box-shadow: 10px 10px 0 var(--dr-black);
 		}
 
-		@keyframes cosmicVictory {
+		@keyframes drVictory {
 			from {
 				opacity: 0;
-				transform: scale(0.5) rotate(-10deg);
+				transform: scale(0.8);
 			}
-
 			to {
 				opacity: 1;
-				transform: scale(1) rotate(0);
+				transform: scale(1);
 			}
 		}
 
-		.cosmic-badge {
-			font-size: 8em;
+		.dr-badge {
+			font-size: 6em;
 			margin: 30px 0;
-			animation: orbit 4s linear infinite;
-			filter: drop-shadow(0 0 30px var(--star-yellow));
+			animation: drPulse 1s ease-in-out infinite;
 		}
 
-		@keyframes orbit {
-			0% {
-				transform: rotate(0deg) scale(1);
-			}
-
-			50% {
-				transform: rotate(180deg) scale(1.1);
-			}
-
-			100% {
-				transform: rotate(360deg) scale(1);
-			}
+		@keyframes drPulse {
+			0%, 100% { transform: scale(1); text-shadow: 0 0 10px var(--dr-pink); }
+			50% { transform: scale(1.1); text-shadow: 0 0 30px var(--dr-pink); }
 		}
 
-		.cosmic-completion h2 {
-			font-size: 3.5em;
+		.dr-completion h2 {
+			font-size: 2.5em;
+			margin-bottom: 20px;
+			text-shadow: 3px 3px 0 var(--dr-black);
+		}
+
+		.dr-completion p {
+			font-size: 1.2em;
 			margin-bottom: 30px;
-			text-shadow:
-				0 0 20px var(--star-yellow),
-				0 0 40px var(--comet-cyan);
 		}
 
-		/* Астероиды */
-		.asteroid {
-			position: fixed;
-			width: 5px;
-			height: 5px;
-			background: var(--star-yellow);
-			border-radius: 50%;
-			animation: asteroidFall 10s linear infinite;
-			z-index: -1;
+		/* Футер */
+		footer {
+			margin-top: 30px;
+			padding: 20px;
+			text-align: center;
+			border-top: 2px solid var(--dr-pink);
 		}
 
-		@keyframes asteroidFall {
-			0% {
-				transform: translateY(-100px) translateX(0) rotate(0deg);
-				opacity: 0;
-			}
+		footer div {
+			display: flex;
+			justify-content: center;
+			gap: 20px;
+			flex-wrap: wrap;
+		}
 
-			10% {
-				opacity: 1;
-			}
+		.btn-footer {
+			background: var(--gradient-dr);
+			color: white;
+			padding: 12px 28px;
+			border-radius: 40px;
+			text-decoration: none;
+			font-weight: bold;
+			box-shadow: 4px 4px 0 var(--dr-black);
+			transition: all 0.1s linear;
+			display: inline-block;
+		}
 
-			90% {
-				opacity: 1;
-			}
+		.btn-footer:active {
+			transform: translate(2px, 2px);
+			box-shadow: 2px 2px 0 var(--dr-black);
+		}
 
-			100% {
-				transform: translateY(100vh) translateX(100px) rotate(360deg);
-				opacity: 0;
-			}
+		.btn-footer:hover {
+			background: linear-gradient(135deg, #ff1a8c, #cc3b3b);
 		}
 
 		/* Адаптивность */
 		@media (max-width: 768px) {
-			.cosmic-container {
+			.dr-container {
 				margin: 10px;
 				border-radius: 20px;
 			}
-
-			.cosmic-header h1 {
-				font-size: 2.5em;
+			.dr-header h1 {
+				font-size: 2em;
 			}
-
-			.cosmic-inputs {
+			.dr-inputs {
 				flex-direction: column;
 			}
-
-			.cosmic-input,
-			.cosmic-select,
-			.cosmic-btn {
-				min-width: 100%;
-			}
-
-			.planet-1,
-			.planet-2 {
-				display: none;
+			.quest-content {
+				padding: 20px;
 			}
 		}
 	</style>
 </head>
 
 <body>
-	<!-- Космический фон -->
-	<div class="cosmic-bg" id="cosmicBg"></div>
+	<div class="dr-bg"></div>
+	
+	<!-- Плавающие элементы -->
+	<div class="dr-particle" style="width: 300px; height: 300px; top: -100px; right: -100px;"></div>
+	<div class="dr-particle" style="width: 200px; height: 200px; bottom: 50px; left: -80px; animation-duration: 25s;"></div>
+	<div class="dr-particle" style="width: 150px; height: 150px; top: 50%; right: 10%; animation-duration: 18s;"></div>
 
-	<!-- Планеты -->
-	<div class="planet planet-1"></div>
-	<div class="planet planet-2"></div>
+	<div class="dr-container">
+		<div class="dr-header">
+			<h1>🔪 КЛАССНЫЙ СУД</h1>
+			<p>Путь Разработчика | Надежда vs Отчаяние</p>
 
-	<!-- Астероиды -->
-	<div id="asteroids"></div>
-
-	<div class="cosmic-container">
-		<div class="cosmic-header">
-			<h1>🌌 Космический Квест</h1>
-			<p>Покори галактику веб-разработки!</p>
-
-			<div class="cosmic-progress">
-				<div class="cosmic-levels">
+			<div class="dr-progress">
+				<div class="dr-levels">
 					<div class="level-dot active" id="dot-1"></div>
 					<div class="level-dot" id="dot-2"></div>
 					<div class="level-dot" id="dot-3"></div>
@@ -628,437 +509,289 @@
 		<div class="quest-content">
 			<!-- Уровень 1: HTML -->
 			<div class="challenge active" id="challenge-1">
-				<h2>🚀 Уровень 1: Освоение HTML-Галактики</h2>
-				<div class="cosmic-task">
-					<p>🌍 Ты на неизведанной планете! Создай базовую структуру космической страницы:</p>
-					<div class="cosmic-editor html-editor">
-						&lt;!DOCTYPE html&gt;
-						&lt;html lang="ru"&gt;
-						&lt;head&gt;
-						&lt;meta charset="UTF-8"&gt;
-						&lt;title&gt;Космическая Одиссея&lt;/title&gt;
-						&lt;/head&gt;
-						&lt;body&gt;
-						<span class="code-cursor" id="html-cursor">&nbsp;</span>
-						&lt;/body&gt;
+				<h2>🔪 Уровень 1: HTML - Улика найдена!</h2>
+				<div class="dr-task">
+					<p>🎲 Собери доказательства! Создай базовую структуру страницы:</p>
+					<div class="dr-editor html-editor">
+						&lt;!DOCTYPE html&gt;<br>
+						&lt;html lang="ru"&gt;<br>
+						&lt;head&gt;<br>
+						&nbsp;&nbsp;&lt;meta charset="UTF-8"&gt;<br>
+						&nbsp;&nbsp;&lt;title&gt;Классный суд&lt;/title&gt;<br>
+						&lt;/head&gt;<br>
+						&lt;body&gt;<br>
+						<span class="code-cursor" id="html-cursor">&nbsp;</span><br>
+						&lt;/body&gt;<br>
 						&lt;/html&gt;
 					</div>
-					<div class="cosmic-hint">
-						💫 Подсказка: Используй теги &lt;h1&gt; для главного заголовка и &lt;p&gt; для описания планеты
+					<div class="dr-hint">
+						💀 Подсказка: Используй &lt;h1&gt; для обвинения и &lt;p&gt; для улик
 					</div>
-					<div class="cosmic-inputs">
-						<input type="text" class="cosmic-input" id="html-input"
-                               placeholder="Введи HTML-код... (например: <h1>Привет, космос!</h1>)">
-						<button class="cosmic-btn" onclick="checkHTML()">🚀 Запустить проверку</button>
+					<div class="dr-inputs">
+						<input type="text" class="dr-input" id="html-input"
+                               placeholder="Введи HTML-код... (например: <h1>Виновен!</h1>)">
+						<button class="dr-btn" onclick="checkHTML()">🔪 ВЕРДИКТ</button>
 					</div>
-					<div class="cosmic-feedback" id="html-feedback"></div>
+					<div class="dr-feedback" id="html-feedback"></div>
 				</div>
 			</div>
 
 			<!-- Уровень 2: CSS -->
 			<div class="challenge" id="challenge-2">
-				<h2>🎨 Уровень 2: Туманности CSS</h2>
-				<div class="cosmic-task">
-					<p>🌈 Преврати скучную планету в красочную туманность с помощью CSS-магии:</p>
-					<div class="cosmic-editor css-editor">
-						/* Создай космический стиль для заголовка */
-						h1 {
-						<span class="code-cursor" id="css-cursor">&nbsp;</span>
-						}
-
-						/* Добавь межгалактические отступы */
-						p {
-						margin: 25px;
+				<h2>💔 Уровень 2: CSS - Кровь и Розы</h2>
+				<div class="dr-task">
+					<p>🎨 Добавь стиль отчаяния или надежды:</p>
+					<div class="dr-editor css-editor">
+						/* Стиль для главного заголовка */<br>
+						h1 {<br>
+						<span class="code-cursor" id="css-cursor">&nbsp;</span><br>
 						}
 					</div>
-					<div class="cosmic-inputs">
-						<select class="cosmic-select" id="css-select">
-                            <option value="">🌠 Выбери космическое свойство</option>
-                            <option value="color: #00FFFF; text-align: center; text-shadow: 0 0 10px #00FFFF;">Неоновый свет</option>
-                            <option value="background: linear-gradient(45deg, #8B5FBF, #6A67CE); color: white; padding: 20px; border-radius: 15px;">Градиент туманности</option>
-                            <option value="font-size: 3em; color: #FFD700; animation: glow 2s infinite alternate;">Золотое свечение</option>
+					<div class="dr-inputs">
+						<select class="dr-select" id="css-select">
+                            <option value="">⚖️ Выбери стиль</option>
+                            <option value="color: #e6007a; text-align: center; text-shadow: 3px 3px 0 #000;">Розовая кровь</option>
+                            <option value="background: linear-gradient(135deg, #e6007a, #b52e2e); color: white; padding: 20px; border-radius: 15px;">Градиент отчаяния</option>
+                            <option value="font-size: 3em; color: #e6007a; animation: pulse 1s infinite;">Пульс надежды</option>
                         </select>
-						<button class="cosmic-btn" onclick="checkCSS()">🎨 Применить стиль</button>
+						<button class="dr-btn" onclick="checkCSS()">💀 ПРИМЕНИТЬ</button>
 					</div>
-					<div class="cosmic-feedback" id="css-feedback"></div>
+					<div class="dr-feedback" id="css-feedback"></div>
 				</div>
 			</div>
 
 			<!-- Уровень 3: JavaScript -->
 			<div class="challenge" id="challenge-3">
-				<h2>⚡ Уровень 3: Энергия JavaScript</h2>
-				<div class="cosmic-task">
-					<p>✨ Наполни вселенную интерактивностью! Создай реакцию на клик:</p>
-					<div class="cosmic-editor js-editor">
-						// Найди космическую кнопку и добавь обработчик
-						const cosmicButton = document.getElementById('cosmicBtn');
-
-						cosmicButton.addEventListener('click', function() {
-						<span class="code-cursor" id="js-cursor">&nbsp;</span>
+				<h2>⚡ Уровень 3: JavaScript - Правда выходит наружу</h2>
+				<div class="dr-task">
+					<p>✨ Активируй классный суд:</p>
+					<div class="dr-editor js-editor">
+						// Объявляем правду<br>
+						const truth = document.getElementById('truthBtn');<br><br>
+						truth.addEventListener('click', function() {<br>
+						<span class="code-cursor" id="js-cursor">&nbsp;</span><br>
 						});
 					</div>
-					<div class="cosmic-inputs">
-						<input type="text" class="cosmic-input" id="js-input"
-                               placeholder="Что произойдет при клике? (например: this.style.transform = 'rotate(180deg)')">
-						<button class="cosmic-btn" onclick="checkJS()">⚡ Активировать код</button>
+					<div class="dr-inputs">
+						<input type="text" class="dr-input" id="js-input"
+                               placeholder="Что произойдет? (например: alert('Виновен!'))">
+						<button class="dr-btn" onclick="checkJS()">🔍 РАССЛЕДОВАНИЕ</button>
 					</div>
-					<div class="cosmic-feedback" id="js-feedback"></div>
+					<div class="dr-feedback" id="js-feedback"></div>
 				</div>
 			</div>
 
 			<!-- Уровень 4: Комбинированный -->
 			<div class="challenge" id="challenge-4">
-				<h2>🔗 Уровень 4: Создание Звездной Системы</h2>
-				<div class="cosmic-task">
-					<p>🎮 Собери все знания и создай интерактивный космический счетчик:</p>
-					<div class="cosmic-editor combined-editor">
-						&lt;!-- HTML для звездной системы --&gt;
-						&lt;div class="star-counter"&gt;
-						&lt;button id="supernova"&gt;💥 Взрыв сверхновой&lt;/button&gt;
-						&lt;span id="star-count"&gt;0 звёзд&lt;/span&gt;
-						&lt;button id="blackhole"&gt;🕳️ Чёрная дыра&lt;/button&gt;
-						&lt;/div&gt;
-
-						&lt;style&gt;
-						/* Космические стили */
-						.star-counter {
-						display: flex;
-						gap: 20px;
-						align-items: center;
-						font-size: 2em;
-						background: var(--gradient-nebula);
-						padding: 25px;
-						border-radius: 20px;
-						color: white;
-						border: 2px solid var(--comet-cyan);
-						}
-						&lt;/style&gt;
-
-						&lt;script&gt;
-						// JavaScript для управления вселенной
-						let stars = 0;
-						<span class="code-cursor" id="combined-cursor">&nbsp;</span>
+				<h2>🎲 Уровень 4: Финальный классный суд</h2>
+				<div class="dr-task">
+					<p>🎮 Создай систему голосования "Виновен/Невиновен":</p>
+					<div class="dr-editor combined-editor">
+						&lt;!-- Панель классного суда --&gt;<br>
+						&lt;div class="trial-panel"&gt;<br>
+						&nbsp;&nbsp;&lt;button id="guilty"&gt;🔪 ВИНОВЕН&lt;/button&gt;<br>
+						&nbsp;&nbsp;&lt;span id="verdict"&gt;??? голосов&lt;/span&gt;<br>
+						&nbsp;&nbsp;&lt;button id="innocent"&gt;💔 НЕВИНОВЕН&lt;/button&gt;<br>
+						&lt;/div&gt;<br><br>
+						&lt;script&gt;<br>
+						let votes = 0;<br>
+						<span class="code-cursor" id="combined-cursor">&nbsp;</span><br>
 						&lt;/script&gt;
 					</div>
-					<div class="cosmic-inputs">
-						<button class="cosmic-btn" onclick="showHint(4)">💡 Космическая подсказка</button>
-						<button class="cosmic-btn" onclick="checkCombined()">🎯 Проверить созвездие</button>
+					<div class="dr-inputs">
+						<button class="dr-btn" onclick="showHint(4)">💀 ПОДСКАЗКА</button>
+						<button class="dr-btn" onclick="checkCombined()">⚖️ ВЫНЕСТИ ПРИГОВОР</button>
 					</div>
-					<div class="cosmic-feedback" id="combined-feedback"></div>
+					<div class="dr-feedback" id="combined-feedback"></div>
 				</div>
 			</div>
 
 			<!-- Завершение -->
-			<div class="cosmic-completion" id="completion">
-				<div class="cosmic-badge">🏆</div>
-				<h2>ну, пойдет</h2>
-        <p> это типа хорошо, отлично</P>
-				<button class="cosmic-btn" onclick="restartQuest()">🌌 Новая миссия</button>
+			<div class="dr-completion" id="completion">
+				<div class="dr-badge">🏆</div>
+				<h2>SORE WA CHIGAU YO!</h2>
+				<p>Это не так! Ты прошел классный суд разработки!</p>
+				<p>Надежда победила отчаяние!</p>
+				<button class="dr-btn" onclick="restartQuest()">🎲 НОВОЕ РАССЛЕДОВАНИЕ</button>
 			</div>
 		</div>
 	</div>
 
+	<footer>
+		<div>
+			<a href="https://github.com/nrostomentos" class="btn-footer">🐙 GitHub</a>
+			<a href="https://t.me/swn_f" class="btn-footer">📱 Telegram</a>
+		</div>
+	</footer>
+
 	<script>
 		let currentLevel = 1;
-        const totalLevels = 4;
+		const totalLevels = 4;
 
-        // Создание звездного неба
-        function createStars() {
-            const cosmicBg = document.getElementById('cosmicBg');
-            for (let i = 0; i < 200; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.width = Math.random() * 3 + 'px';
-                star.style.height = star.style.width;
-                star.style.left = Math.random() * 100 + 'vw';
-                star.style.top = Math.random() * 100 + 'vh';
-                star.style.animationDelay = Math.random() * 4 + 's';
-                star.style.opacity = Math.random() * 0.7 + 0.3;
-                cosmicBg.appendChild(star);
-            }
-        }
+		function updateProgress() {
+			const progress = ((currentLevel - 1) / totalLevels) * 100;
+			document.getElementById('progress').style.width = progress + '%';
+			
+			for (let i = 1; i <= totalLevels; i++) {
+				const dot = document.getElementById(`dot-${i}`);
+				if (i <= currentLevel) {
+					dot.classList.add('active');
+				} else {
+					dot.classList.remove('active');
+				}
+			}
+		}
 
-        // Создание астероидов
-        function createAsteroids() {
-            const asteroidsContainer = document.getElementById('asteroids');
-            for (let i = 0; i < 20; i++) {
-                const asteroid = document.createElement('div');
-                asteroid.className = 'asteroid';
-                asteroid.style.left = Math.random() * 100 + 'vw';
-                asteroid.style.animationDelay = Math.random() * 10 + 's';
-                asteroid.style.width = Math.random() * 4 + 2 + 'px';
-                asteroid.style.height = asteroid.style.width;
-                asteroidsContainer.appendChild(asteroid);
-            }
-        }
+		function showLevel(level) {
+			document.querySelectorAll('.challenge').forEach(challenge => {
+				challenge.classList.remove('active');
+			});
+			document.getElementById(`challenge-${level}`).classList.add('active');
+		}
 
-        function updateProgress() {
-            const progress = ((currentLevel - 1) / totalLevels) * 100;
-            document.getElementById('progress').style.width = progress + '%';
-            
-            // Обновление точек уровней
-            for (let i = 1; i <= totalLevels; i++) {
-                const dot = document.getElementById(`dot-${i}`);
-                if (i <= currentLevel) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            }
-        }
+		function createBloodEffect() {
+			for (let i = 0; i < 20; i++) {
+				setTimeout(() => {
+					const particle = document.createElement('div');
+					particle.style.cssText = `
+						position: fixed;
+						width: ${Math.random() * 30 + 10}px;
+						height: ${Math.random() * 30 + 10}px;
+						background: radial-gradient(circle, #e6007a, #b52e2e);
+						border-radius: 50%;
+						top: ${Math.random() * 100}vh;
+						left: ${Math.random() * 100}vw;
+						animation: bloodSplat 0.8s ease-out forwards;
+						pointer-events: none;
+						z-index: 1000;
+						filter: blur(3px);
+					`;
+					
+					if (!document.querySelector('#bloodStyle')) {
+						const style = document.createElement('style');
+						style.id = 'bloodStyle';
+						style.textContent = `
+							@keyframes bloodSplat {
+								0% { transform: scale(0); opacity: 0.8; }
+								100% { transform: scale(1.5); opacity: 0; }
+							}
+						`;
+						document.head.appendChild(style);
+					}
+					document.body.appendChild(particle);
+					setTimeout(() => particle.remove(), 800);
+				}, i * 50);
+			}
+		}
 
-        function showLevel(level) {
-            document.querySelectorAll('.challenge').forEach(challenge => {
-                challenge.classList.remove('active');
-            });
-            const currentChallenge = document.getElementById(`challenge-${level}`);
-            currentChallenge.classList.add('active');
-            
-            // Космическая анимация появления
-            currentChallenge.style.animation = 'none';
-            setTimeout(() => {
-                currentChallenge.style.animation = 'cosmicAppear 0.8s ease-out';
-            }, 10);
-        }
+		function checkHTML() {
+			const input = document.getElementById('html-input').value.toLowerCase();
+			const feedback = document.getElementById('html-feedback');
+			
+			if (input.includes('<h1>') && input.includes('</h1>')) {
+				feedback.className = 'dr-feedback success';
+				feedback.innerHTML = '✅ ВЕРДИКТ: ВИНОВЕН! Отличная HTML-структура! 🔪';
+				createBloodEffect();
+				setTimeout(() => {
+					currentLevel = 2;
+					showLevel(2);
+					updateProgress();
+				}, 2000);
+			} else {
+				feedback.className = 'dr-feedback error';
+				feedback.innerHTML = '❌ SORE WA CHIGAU YO! Тебе нужен тег h1 для обвинения!';
+			}
+		}
 
-        function checkHTML() {
-            const input = document.getElementById('html-input').value.toLowerCase();
-            const feedback = document.getElementById('html-feedback');
-            
-            if (input.includes('<h1>') && input.includes('</h1>') && 
-                (input.includes('<p>') || input.includes('<div>') || input.includes('<span>'))) {
-                feedback.className = 'cosmic-feedback success';
-                feedback.innerHTML = '✅ Превосходно! Ты создал стабильную HTML-структуру для космической базы! 🚀';
-                createNebulaEffect();
-                setTimeout(() => {
-                    currentLevel = 2;
-                    showLevel(2);
-                    updateProgress();
-                }, 2500);
-            } else {
-                feedback.className = 'cosmic-feedback error';
-                feedback.innerHTML = '❌ Почти! Проверь, что используешь теги h1 и p/div/span для построения структуры';
-            }
-        }
+		function checkCSS() {
+			const select = document.getElementById('css-select');
+			const feedback = document.getElementById('css-feedback');
+			
+			if (select.value.includes("color: #e6007a")) {
+				feedback.className = 'dr-feedback success';
+				feedback.innerHTML = '💀 ИДЕАЛЬНО! Стиль классного суда применен! 🌹';
+				createBloodEffect();
+				setTimeout(() => {
+					currentLevel = 3;
+					showLevel(3);
+					updateProgress();
+				}, 2000);
+			} else {
+				feedback.className = 'dr-feedback error';
+				feedback.innerHTML = '💔 Не тот стиль! Выбери розовый цвет для настоящего отчаяния!';
+			}
+		}
 
-        function checkCSS() {
-            const select = document.getElementById('css-select');
-            const feedback = document.getElementById('css-feedback');
-            
-            if (select.value.includes("color: #00FFFF; text-align: center;")) {
-                feedback.className = 'cosmic-feedback success';
-                feedback.innerHTML = '🎨 Великолепно! Твоя туманность заиграла неоновыми красками! 🌈';
-                createNebulaEffect();
-                setTimeout(() => {
-                    currentLevel = 3;
-                    showLevel(3);
-                    updateProgress();
-                }, 2500);
-            } else {
-                feedback.className = 'cosmic-feedback error';
-                feedback.innerHTML = '🎨 Интересно, но попробуй сделать заголовок бирюзовым и выровнять по центру';
-            }
-        }
+		function checkJS() {
+			const input = document.getElementById('js-input').value.toLowerCase();
+			const feedback = document.getElementById('js-feedback');
+			
+			if (input.includes('alert') || input.includes('console') || input.includes('style') || input.includes('inner')) {
+				feedback.className = 'dr-feedback success';
+				feedback.innerHTML = '⚡ ПРАВДА ВСКРЫЛАСЬ! JavaScript активирован! 🔍';
+				createBloodEffect();
+				setTimeout(() => {
+					currentLevel = 4;
+					showLevel(4);
+					updateProgress();
+				}, 2000);
+			} else {
+				feedback.className = 'dr-feedback error';
+				feedback.innerHTML = '🔪 Недостаточно улик! Добавь alert() или изменение стиля!';
+			}
+		}
 
-        function checkJS() {
-            const input = document.getElementById('js-input').value.toLowerCase();
-            const feedback = document.getElementById('js-feedback');
-            
-            if (input.includes('style') || input.includes('class') || input.includes('inner') || input.includes('text')) {
-                feedback.className = 'cosmic-feedback success';
-                feedback.innerHTML = '⚡ Потрясающе! JavaScript наполнил вселенную энергией! ✨';
-                createNebulaEffect();
-                setTimeout(() => {
-                    currentLevel = 4;
-                    showLevel(4);
-                    updateProgress();
-                }, 2500);
-            } else {
-                feedback.className = 'cosmic-feedback error';
-                feedback.innerHTML = '⚡ Хорошая попытка! Попробуй добавить изменение стилей или содержимого элемента';
-            }
-        }
+		function checkCombined() {
+			const feedback = document.getElementById('combined-feedback');
+			
+			feedback.className = 'dr-feedback success';
+			feedback.innerHTML = '⚖️ ПРИГОВОР: ВИНОВЕН! Ты прошел классный суд разработки! 🎲';
+			createBloodEffect();
+			
+			setTimeout(() => {
+				document.getElementById('completion').style.display = 'block';
+				document.querySelectorAll('.challenge').forEach(challenge => {
+					challenge.style.display = 'none';
+				});
+			}, 2000);
+		}
 
-        function checkCombined() {
-            const feedback = document.getElementById('combined-feedback');
-            
-            feedback.className = 'cosmic-feedback success';
-            feedback.innerHTML = '🔗 Феноменально! Ты создал работающую звёздную систему! 🌌';
-            createNebulaEffect();
-            
-            setTimeout(() => {
-                document.getElementById('completion').style.display = 'block';
-                document.querySelectorAll('.challenge').forEach(challenge => {
-                    challenge.style.display = 'none';
-                });
-                createSupernova();
-            }, 3000);
-        }
+		function showHint(level) {
+			const feedback = document.getElementById('combined-feedback');
+			feedback.className = 'dr-feedback success';
+			feedback.innerHTML = '💀 Подсказка: Добавь обработчики click для кнопок, которые увеличивают votes и обновляют текст в span с id="verdict"';
+		}
 
-        function showHint(level) {
-            const feedback = document.getElementById('combined-feedback');
-            feedback.className = 'cosmic-feedback success';
-            feedback.innerHTML = '💫 Космическая подсказка: Добавь обработчики click для кнопок, которые изменяют переменную stars и обновляют текст в span с id="star-count"';
-        }
+		function restartQuest() {
+			currentLevel = 1;
+			updateProgress();
+			showLevel(1);
+			document.getElementById('completion').style.display = 'none';
+			document.querySelectorAll('.challenge').forEach(challenge => {
+				challenge.style.display = 'block';
+			});
+			
+			document.getElementById('html-input').value = '';
+			document.getElementById('css-select').selectedIndex = 0;
+			document.getElementById('js-input').value = '';
+			
+			document.querySelectorAll('.dr-feedback').forEach(fb => {
+				fb.style.display = 'none';
+			});
+		}
 
-        function restartQuest() {
-            currentLevel = 1;
-            updateProgress();
-            showLevel(1);
-            document.getElementById('completion').style.display = 'none';
-            document.querySelectorAll('.challenge').forEach(challenge => {
-                challenge.style.display = 'block';
-            });
-            
-            // Сброс полей ввода
-            document.getElementById('html-input').value = '';
-            document.getElementById('css-select').selectedIndex = 0;
-            document.getElementById('js-input').value = '';
-            
-            // Сброс фидбэков
-            document.querySelectorAll('.cosmic-feedback').forEach(fb => {
-                fb.style.display = 'none';
-            });
-        }
-
-        // Эффект туманности при успехе
-        function createNebulaEffect() {
-            for (let i = 0; i < 15; i++) {
-                setTimeout(() => {
-                    const particle = document.createElement('div');
-                    particle.style.cssText = `
-                        position: fixed;
-                        width: ${Math.random() * 100 + 50}px;
-                        height: ${Math.random() * 100 + 50}px;
-                        background: radial-gradient(circle, 
-                            ${i % 3 === 0 ? 'var(--cosmic-purple)' : i % 3 === 1 ? 'var(--nebula-blue)' : 'var(--comet-cyan)'}, 
-                            transparent 70%);
-                        border-radius: 50%;
-                        top: ${Math.random() * 100}vh;
-                        left: ${Math.random() * 100}vw;
-                        animation: nebulaExpand 2s ease-out forwards;
-                        pointer-events: none;
-                        z-index: 100;
-                        opacity: 0.6;
-                        filter: blur(20px);
-                    `;
-                    
-                    const style = document.createElement('style');
-                    if (!document.querySelector('#nebulaAnimation')) {
-                        style.id = 'nebulaAnimation';
-                        style.textContent = `
-                            @keyframes nebulaExpand {
-                                0% { transform: scale(0); opacity: 0.8; }
-                                100% { transform: scale(2); opacity: 0; }
-                            }
-                        `;
-                        document.head.appendChild(style);
-                    }
-                    document.body.appendChild(particle);
-                    
-                    setTimeout(() => particle.remove(), 2000);
-                }, i * 150);
-            }
-        }
-
-        // Эффект сверхновой при завершении
-        function createSupernova() {
-            const supernova = document.createElement('div');
-            supernova.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                width: 0;
-                height: 0;
-                background: radial-gradient(circle, 
-                    var(--star-yellow), 
-                    var(--planet-orange), 
-                    var(--cosmic-purple),
-                    transparent 80%);
-                border-radius: 50%;
-                transform: translate(-50%, -50%);
-                animation: supernovaExplosion 3s ease-out forwards;
-                pointer-events: none;
-                z-index: 1000;
-                filter: blur(10px);
-            `;
-            
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes supernovaExplosion {
-                    0% { width: 0; height: 0; opacity: 1; }
-                    100% { width: 200vmax; height: 200vmax; opacity: 0; }
-                }
-            `;
-            document.head.appendChild(style);
-            document.body.appendChild(supernova);
-            
-            setTimeout(() => {
-                supernova.remove();
-                style.remove();
-            }, 3000);
-        }
-
-        // Инициализация
-        document.addEventListener('DOMContentLoaded', function() {
-            createStars();
-            createAsteroids();
-            updateProgress();
-            
-            // Обработчики Enter для полей ввода
-            document.getElementById('html-input').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') checkHTML();
-            });
-            
-            document.getElementById('js-input').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') checkJS();
-            });
-        });
-
-        // Анимация планет
-        function animatePlanets() {
-            const planets = document.querySelectorAll('.planet');
-            planets.forEach((planet, index) => {
-                planet.style.animation = `float ${15 + index * 5}s infinite ease-in-out ${index % 2 ? 'reverse' : ''}`;
-            });
-        }
-
-        animatePlanets();
+		document.addEventListener('DOMContentLoaded', function() {
+			updateProgress();
+			
+			document.getElementById('html-input').addEventListener('keypress', function(e) {
+				if (e.key === 'Enter') checkHTML();
+			});
+			
+			document.getElementById('js-input').addEventListener('keypress', function(e) {
+				if (e.key === 'Enter') checkJS();
+			});
+		});
 	</script>
-<style>
-	/* Яркая розовая подсветка */
-	a {
-		color: #ff1493;
-		/* Яркий розовый */
-		text-decoration: none;
-		transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-		padding: 3px 6px;
-		border-radius: 4px;
-		position: relative;
-	}
-
-	a:hover {
-		background: linear-gradient(135deg, #ff1493, #ff69b4);
-		color: white;
-		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-		box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
-		transform: translateY(-2px);
-	}
-
-	a:active {
-		transform: translateY(0);
-	}
-
-	a:visited {
-		color: #c71585;
-	}
-</style>
-<footer>
-	<div>
-		<a href="https://github.com/nrostomentos" class="btn">На GitHub</a>
-		<a href="https://t.me/swn_f" class="btn">Связаться со мной</a>
-	</div>
-</footer>
 </body>
 
 </html>
